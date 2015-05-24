@@ -18,7 +18,7 @@ func BuildHardUrl(params map[string]string, itemTypes []string) (searchUrl strin
 	for k, _ := range params {
 		passes = checkParam(k, acceptableParams)
 		if passes == false {
-			err := errors.New("HardSearch can only search for artist, track, or album. Found:" + k)
+			err := errors.New("HardSearch can only search for artist, track, or album. Found: " + k)
 			return "", err
 		}
 	}
@@ -28,7 +28,7 @@ func BuildHardUrl(params map[string]string, itemTypes []string) (searchUrl strin
 	for _, v := range itemTypes {
 		passes = checkParam(v, acceptableTypes)
 		if passes == false {
-			err := errors.New("HardSearch can only search by type artist, track, album, or playlist. Found:" + v)
+			err := errors.New("HardSearch can only search by type artist, track, album, or playlist. Found: " + v)
 			return "", err
 		}
 	}
