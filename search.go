@@ -11,7 +11,7 @@ var acceptableTypes = []string{"artist", "track", "album", "playlist"}
 
 // Accept a map of search params (e.g track name, artist name, playlist name, etc) and
 // search type slice [artist, playlist, track]. Types can be any number of types acceptable by api, must  have >= one.
-func HardSearch(params map[string]string, itemTypes []string) (searchUrl string, err error) {
+func BuildHardUrl(params map[string]string, itemTypes []string) (searchUrl string, err error) {
 
 	// ensure keys of params are all Spotify field filters
 	var passes bool
@@ -37,7 +37,7 @@ func HardSearch(params map[string]string, itemTypes []string) (searchUrl string,
 
 	// format params into spotify search query (q=track:Track+Name+artist:Artist+Name)
 	for k, v := range params {
-		queryString += url.QueryEscape(k) + ":" + url.QueryEscape(v) + "+"
+		queryString += url.QueryEscape(strings.ToLower(k)) + ":" + url.QueryEscape(strings.ToLower(v)) + "+"
 	}
 
 	return "https://api.spotify.com/v1/search?q=" + queryString + "&type=" + strings.Join(itemTypes, ","), err
