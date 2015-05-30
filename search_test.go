@@ -1,6 +1,7 @@
 package spot
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -26,6 +27,18 @@ func TestBuildHardUrl(t *testing.T) {
 	url, _ = BuildHardUrl(params, []string{"track"})
 	if url != expected {
 		fail(t, desc, expected, url)
+	}
+
+	desc = "Normal search with mutltiple types returns correct url"
+	expected = "https://api.spotify.com/v1/search?q=artist:mariah+carey+track:always+be+my+baby+&type=track,album"
+	params = map[string]string{
+		"artist": "Mariah Carey",
+		"track":  "always be my baby",
+	}
+	url, _ = BuildHardUrl(params, []string{"track", "album"})
+	if url != expected {
+		fail(t, desc, expected, url)
+		fmt.Println(err)
 	}
 
 	desc = "Passing in incorrect type returns error"
