@@ -2,6 +2,7 @@ package spot
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -50,6 +51,29 @@ func TestBuildHardUrl(t *testing.T) {
 
 }
 
-func fail(t *testing.T, desc, expected, got string) {
+func TestHardSearch(t *testing.T) {
+
+	params := map[string]string{
+		"artist": "Billy Joel",
+		"track":  "Big Shot",
+	}
+	types := []string{"track"}
+
+	desc := "Search for track returns SearchResult struct."
+	expected := reflect.TypeOf(SearchResults{})
+	results, err := HardSearch(params, types)
+	if reflect.TypeOf(results) != expected {
+		fail(t, desc, expected, err)
+	}
+
+	desc = "Search for track- SearchResults.TrackResults is TrackResults{}"
+	expected = reflect.TypeOf(TrackResults{})
+	if reflect.TypeOf(results.Tracks) != expected {
+		fail(t, desc, expected, err)
+	}
+
+}
+
+func fail(t *testing.T, desc string, expected, got interface{}) {
 	t.Errorf("Testing %q | Expected: %q, Got %q", desc, expected, got)
 }
