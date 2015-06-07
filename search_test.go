@@ -1,7 +1,9 @@
+// TODO: Find song - Return first HardSearch result.
 package spot
 
 import (
 	"fmt"
+	//"github.com/joho/godotenv"
 	"reflect"
 	"testing"
 )
@@ -48,7 +50,6 @@ func TestBuildHardUrl(t *testing.T) {
 	if err.Error() != expected {
 		fail(t, desc, expected, err.Error())
 	}
-
 }
 
 func TestHardSearch(t *testing.T) {
@@ -72,8 +73,16 @@ func TestHardSearch(t *testing.T) {
 		fail(t, desc, expected, err)
 	}
 
+	//	err := godotenv.Load()
+	//	if err != nil {
+	//		log.Fatal("Error loading .env file")
+	//	}
+	//
+	//	spotifyKey := os.Getenv("SPOTIFY_CLIENT_ID")
+	//	spotifySecret := os.Getenv("SPOTIFY_CLIENT_SECRET")
 }
 
 func fail(t *testing.T, desc string, expected, got interface{}) {
 	t.Errorf("Testing %q | Expected: %q, Got %q", desc, expected, got)
+
 }

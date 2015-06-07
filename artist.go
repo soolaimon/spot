@@ -7,3 +7,9 @@ type Artist struct {
 	Type   string
 	Uri    string
 }
+
+type ArtistResults struct {
+	Href  string
+	Items []Artist
+	total int
+}

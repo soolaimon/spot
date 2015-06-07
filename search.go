@@ -3,6 +3,7 @@ package spot
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -11,7 +12,9 @@ import (
 )
 
 type SearchResults struct {
-	Tracks TrackResults `json:tracks`
+	Tracks  TrackResults  `json:tracks`
+	Albums  AlbumResults  `json:tracks`
+	Artists ArtistResults `json:tracks`
 }
 
 func HardSearch(params map[string]string, itemTypes []string) (results SearchResults, err error) {
@@ -19,6 +22,7 @@ func HardSearch(params map[string]string, itemTypes []string) (results SearchRes
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(url)
 
 	res, err := http.Get(url)
 	if err != nil {
@@ -81,8 +85,10 @@ func BuildHardUrl(params map[string]string, itemTypes []string) (searchUrl strin
 		queryString += url.QueryEscape(strings.ToLower(t)) + ":" + url.QueryEscape(strings.ToLower(params[t])) + "+"
 	}
 
-	return "https://api.spotify.com/v1/search?q=" + queryString + "&type=" + strings.Join(itemTypes, ","), err
+	return baseUrl + "search?q=" + queryString + "&type=" + strings.Join(itemTypes, ","), err
 }
+
+// TODO: Find song - Return first HardSearch result.
 
 // TODO: Soft search
 
