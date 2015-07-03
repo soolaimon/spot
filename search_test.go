@@ -1,9 +1,6 @@
-// TODO: Find song - Return first HardSearch result.
 package spot
 
 import (
-	"fmt"
-	//"github.com/joho/godotenv"
 	"reflect"
 	"testing"
 )
@@ -41,7 +38,6 @@ func TestBuildHardUrl(t *testing.T) {
 	url, _ = BuildHardUrl(params, []string{"track", "album"})
 	if url != expected {
 		fail(t, desc, expected, url)
-		fmt.Println(err)
 	}
 
 	desc = "Passing in incorrect type returns error"
@@ -80,9 +76,4 @@ func TestHardSearch(t *testing.T) {
 	//
 	//	spotifyKey := os.Getenv("SPOTIFY_CLIENT_ID")
 	//	spotifySecret := os.Getenv("SPOTIFY_CLIENT_SECRET")
-}
-
-func fail(t *testing.T, desc string, expected, got interface{}) {
-	t.Errorf("Testing %q | Expected: %q, Got %q", desc, expected, got)
-
 }

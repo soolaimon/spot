@@ -3,7 +3,6 @@ package spot
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -22,7 +21,6 @@ func HardSearch(params map[string]string, itemTypes []string) (results SearchRes
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(url)
 
 	res, err := http.Get(url)
 	if err != nil {
