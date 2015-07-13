@@ -23,7 +23,7 @@ func TestGetTrack(t *testing.T) {
 
 	desc = "Passing in a nonexistent track id should throw err"
 	id = "flimflam"
-	expectedString = "The call did not return a track. The id you passed GetTrack is probably incorrect. Got: " + id
+	expectedString = "404 Not Found"
 
 	_, err = GetTrack(id)
 	if err.Error() != expectedString {

@@ -1,12 +1,5 @@
 package spot
 
-import (
-	"encoding/json"
-	"errors"
-	"io/ioutil"
-	"net/http"
-)
-
 type Track struct {
 	SpotId           string `json:"id"`
 	Name             string
@@ -14,7 +7,7 @@ type Track struct {
 	Artists          []Artist `json:"artists"`
 	AvailableMarkets []string `json:"available_markets"`
 	Album            Album
-	DurationMS       int `json:"duration_ms"` // Duratino in milliseconds
+	DurationMS       int `json:"duration_ms"` // Duration in milliseconds
 	Popularity       int
 	Type             string
 	PreviewUrl       string `json:"preview_url"`
@@ -30,24 +23,11 @@ type TrackResults struct {
 }
 
 func GetTrack(id string) (Track, error) {
-	res, err := http.Get(baseUrl + "tracks/" + id)
-	if err != nil {
-		panic(err)
-	}
-	defer res.Body.Close()
-
-	if res.Status == "404 Not Found" {
-		err = errors.New("The call did not return a track. The id you passed GetTrack is probably incorrect. Got: " + id)
-		return Track{}, err
-	}
-
-	data, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		panic(err)
-	}
-
 	var track Track
-	err = json.Unmarshal(data, &track)
+	err := fetchJson("tracks/"+id, &track)
+	if err != nil {
+		return track, err
+	}
 
 	return track, err
 }
