@@ -1,10 +1,7 @@
 package spot
 
 import (
-	"encoding/json"
 	"errors"
-	"io/ioutil"
-	"net/http"
 	"net/url"
 	"sort"
 	"strings"
@@ -17,24 +14,10 @@ type SearchResults struct {
 }
 
 func HardSearch(params map[string]string, itemTypes []string) (results SearchResults, err error) {
-	url, err := BuildHardUrl(params, itemTypes)
-	if err != nil {
-		panic(err)
-	}
-
-	res, err := http.Get(url)
-	if err != nil {
-		panic(err)
-	}
-	defer res.Body.Close()
-
-	data, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		panic(err)
-	}
+	endpoint, err := BuildHardQuery(params, itemTypes)
 
 	var searchResults SearchResults
-	err = json.Unmarshal(data, &searchResults)
+	err = fetchJson(endpoint, &searchResults)
 	if err != nil {
 		panic(err)
 	}
@@ -48,7 +31,7 @@ var acceptableTypes = []string{"artist", "track", "album", "playlist"}
 
 // Accept a map of search params (e.g track name, artist name, playlist name, etc) and
 // search type slice [artist, playlist, track]. Types can be any number of types acceptable by api, must  have >= one.
-func BuildHardUrl(params map[string]string, itemTypes []string) (searchUrl string, err error) {
+func BuildHardQuery(params map[string]string, itemTypes []string) (searchUrl string, err error) {
 
 	var orderer []string
 	// ensure keys of params are all Spotify field filters
@@ -83,7 +66,7 @@ func BuildHardUrl(params map[string]string, itemTypes []string) (searchUrl strin
 		queryString += url.QueryEscape(strings.ToLower(t)) + ":" + url.QueryEscape(strings.ToLower(params[t])) + "+"
 	}
 
-	return baseUrl + "search?q=" + queryString + "&type=" + strings.Join(itemTypes, ","), err
+	return "search?q=" + queryString + "&type=" + strings.Join(itemTypes, ","), err
 }
 
 // TODO: Find song - Return first HardSearch result.

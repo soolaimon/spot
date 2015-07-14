@@ -25,7 +25,7 @@ func fetchJson(endpoint string, obj interface{}) error {
 		return err
 	}
 
-	err = json.Unmarshal(data, obj)
+	err = json.Unmarshal(data, &obj)
 
 	return err
 
