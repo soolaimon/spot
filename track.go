@@ -14,6 +14,7 @@ type Track struct {
 	Uri              string
 	ExternalIds      map[string]string `json:"external_ids"`
 	Href             string
+	Images           []Image
 }
 
 type TrackResults struct {

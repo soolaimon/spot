@@ -8,6 +8,7 @@ type Artist struct {
 	Uri        string
 	Genres     []string
 	Popularity int
+	Images     []Image
 }
 
 type ArtistResults struct {
