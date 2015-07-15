@@ -9,6 +9,7 @@ type Artist struct {
 	Genres     []string
 	Popularity int
 	Images     []Image
+	Followers  map[string]interface{}
 }
 
 type ArtistResults struct {
