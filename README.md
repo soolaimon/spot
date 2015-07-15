@@ -1,2 +1,2 @@
 #Spot
-#### A Go (lang) wrapper for the Spotify Web API
+A Golang wrapper for the Spotify Web API
