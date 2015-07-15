@@ -8,9 +8,9 @@ import (
 )
 
 type SearchResults struct {
-	Tracks  TrackResults  `json:tracks`
-	Albums  AlbumResults  `json:tracks`
-	Artists ArtistResults `json:tracks`
+	Tracks  TrackResults
+	Albums  AlbumResults
+	Artists ArtistResults
 }
 
 func HardSearch(params map[string]string, itemTypes []string) (results SearchResults, err error) {
